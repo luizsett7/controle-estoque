@@ -1,0 +1,8 @@
+/estoque-frontend/node_modules
+/estoque-api/.phpunit.cache
+/estoque-api/node_modules
+/estoque-api/vendor
+/estoque-api/.env
+/estoque-api/.env.backup
+/estoque-api/.env.production
+
