@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->decimal('cost_price', 10, 2); 
             $table->decimal('sale_price', 10, 2); 
             $table->integer('min_stock'); 
+            $table->integer('stock');
             $table->date('expiration_date')->nullable(); 
             $table->timestamps(); 
         });

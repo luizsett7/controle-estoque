@@ -1,17 +1,15 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
-  <header>  
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+  <header>      
+    <div class="wrapper">     
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">Home</RouterLink>        
+        <RouterLink to="/product-management">Product Management</RouterLink>
+        <RouterLink to="/register">Register</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
       </nav>
     </div>
   </header>
@@ -23,6 +21,7 @@ import HelloWorld from "./components/HelloWorld.vue";
 header {
   line-height: 1.5;
   max-height: 100vh;
+  margin-bottom: 20px;
 }
 
 .logo {
@@ -32,7 +31,7 @@ header {
 
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 16px;
   text-align: center;
   margin-top: 2rem;
 }
