@@ -11,8 +11,10 @@ class CreateMovementsTable extends Migration
         Schema::create('movements', function (Blueprint $table) {
             $table->id(); 
             $table->foreignId('product_id')->constrained()->onDelete('cascade'); 
-            $table->enum('type', ['entry', 'exit']); 
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');  
+            $table->enum('type', ['entry', 'devolution', 'exit', 'loss']); 
             $table->integer('quantity'); 
+            $table->decimal('price', 8, 2);
             $table->string('reason'); 
             $table->timestamps(); 
         });

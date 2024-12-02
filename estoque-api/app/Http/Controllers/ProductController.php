@@ -3,18 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // Retrieve all products
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $query = Product::query();
+
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->has('code')) {
+            $query->where('code', 'like', '%' . $request->input('code') . '%');
+        }
+
+        $query->orderBy('name');
+
+        $products = $query->get();
+
         return response()->json($products);
     }
 
-    // Retrieve a single product by ID
     public function show($id)
     {
         $product = Product::find($id);
@@ -23,10 +35,11 @@ class ProductController extends Controller
             return response()->json(['error' => 'Product not found'], 404);
         }
 
+        $product->expiration_date = $product->expiration_date->format('Y-m-d');
+
         return response()->json($product);
     }
 
-    // Store a new product
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -39,7 +52,7 @@ class ProductController extends Controller
             'sale_price' => 'required|numeric',
             'min_stock' => 'required|integer',
             'stock' => 'required|integer',
-            'expiry_date' => 'nullable|date',
+            'expiration_date' => 'nullable|date',
         ]);
 
         $product = Product::create($validated);
@@ -47,7 +60,6 @@ class ProductController extends Controller
         return response()->json($product, 201);
     }
 
-    // Update an existing product
     public function update(Request $request, $id)
     {
         $product = Product::find($id);
@@ -66,7 +78,7 @@ class ProductController extends Controller
             'sale_price' => 'required|numeric',
             'min_stock' => 'required|integer',
             'stock' => 'required|integer',
-            'expiry_date' => 'nullable|date',
+            'expiration_date' => 'nullable|date',
         ]);
 
         $product->update($validated);
@@ -74,7 +86,6 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    // Delete a product
     public function destroy($id)
     {
         $product = Product::find($id);
@@ -88,7 +99,6 @@ class ProductController extends Controller
         return response()->json(['message' => 'Product deleted successfully']);
     }
 
-    // Get products with low stock
     public function lowStock()
     {
         $products = Product::whereColumn('stock', '<', 'min_stock')
@@ -102,7 +112,11 @@ class ProductController extends Controller
     {
         $products = Product::where('expiration_date', '<', now()->addDays(7))
             ->orderBy('expiration_date', 'asc')
-            ->get();
+            ->get()
+            ->map(function ($product) {
+                $product->expiration_date = Carbon::parse($product->expiration_date)->format('d/m/Y');
+                return $product;
+            });
 
         return response()->json($products);
     }

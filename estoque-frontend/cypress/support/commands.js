@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// Comando personalizado de login
+Cypress.Commands.add('login', (email, password) => {
+    cy.visit('/login');  // Visita a página de login
+    cy.get('input[name="email"]').type(email);
+    cy.get('input[name="password"]').type(password);
+    cy.get('button[type="submit"]').click();
+  
+    // Verifica que o login foi bem-sucedido
+    cy.url().should('include', '/');  // Ajuste a URL conforme necessário
+    cy.contains('Bem-vindo').should('be.visible');
+  });

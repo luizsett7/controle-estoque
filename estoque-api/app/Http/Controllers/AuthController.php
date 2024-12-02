@@ -19,10 +19,10 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
-            // Gerar o token usando Sanctum
             $token = $user->createToken('controle-estoque')->plainTextToken;
 
             return response()->json([
+                'user' => $user,
                 'message' => 'Login successful',
                 'token' => $token
             ]);
