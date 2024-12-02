@@ -91,12 +91,12 @@ cd controle-estoque</code></pre>
       <li>Copie o <code>.env.example</code>:
         <pre><code>cp .env.example .env</code></pre>
       </li>
-      <li>Configure as variáveis de ambiente, como o banco de dados.</li>
+      <li>Configure as credenciais do banco de dados.</li>
     </ul>
   </li>
   <li>Gere a chave da aplicação:
     <pre><code>php artisan key:generate</code></pre>
-  </li>
+  </li>  
   <li>Execute as migrações e seeders:
     <pre><code>php artisan migrate --seed</code></pre>
   </li>
