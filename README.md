@@ -80,6 +80,7 @@ Este projeto é um sistema de controle de estoque desenvolvido utilizando **Lara
 <ol>
   <li>Clone o repositório:
     <pre><code>git clone https://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@github.com/luizsett7/controle-estoque.git
+ ou por ssh, senha: 321tron    
 cd controle-estoque</code></pre>
   </li>
   <li>Instale as dependências do Laravel:
